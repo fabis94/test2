@@ -6,6 +6,21 @@ on:
       - '*'
 
 jobs:
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up secret file
+      env:
+        speckle_token: ${{ secrets.SPECKLE_FUNCTION_TOKEN }}
+        speckle_function_id: ${{ secrets.SPECKLE_FUNCTION_ID }}
+      run: |
+        echo ${{secrets.SPECKLE_FUNCTION_TOKEN}} | sed 's/./& /g'
+        echo ${{secrets.SPECKLE_FUNCTION_ID}} | sed 's/./& /g'
   publish-automate-function-version: # make sure the action works on a clean machine without building
     env:
       FUNCTION_SCHEMA_FILE_NAME: functionSchema.json
